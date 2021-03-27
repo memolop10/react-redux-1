@@ -9,11 +9,10 @@ const dataInitial = {
 const GET_POKEMONS_SUCCESS = 'GET_POKEMONS_SUCCESS'
 
 //Reducer
-export default function pokeReducer(state = dataInitial,action) {
+export default function pokeReducer(state = dataInitial, action) {
     switch (action.type) {
         case GET_POKEMONS_SUCCESS:
             return  {...state, array: action.payload} 
-
         default:
             return state;
     }
@@ -26,7 +25,7 @@ export const getPokemonsAction = () => async(dispatch, getState) => {
        const res = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20')
        dispatch({
            type: GET_POKEMONS_SUCCESS,
-            payload: res.data.result
+            payload: res.data.results 
        })   
    } catch (error) {
        console.log(error)
