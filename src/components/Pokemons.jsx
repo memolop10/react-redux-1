@@ -6,7 +6,7 @@ const Pokemons = () => {
 
     const dispatch = useDispatch()
 
-    const pokemons = useSelector(store => store.pokemons.array)
+    const pokemons = useSelector(store => store.pokemons.results)
 
     return (
         <div>

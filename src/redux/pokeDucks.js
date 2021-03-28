@@ -2,8 +2,10 @@ import axios from 'axios'
 
 //Constantes
 const dataInitial = {
-    array: [],
-    offset: 0
+    count: 0,
+    next: null,
+    previous: null,
+    results: []
 }
 
 //types
@@ -14,9 +16,9 @@ const NEXT_POKEMONS_SUCCESS = 'NEXT_POKEMONS_SUCCESS'
 export default function pokeReducer(state = dataInitial, action) {
     switch (action.type) {
         case GET_POKEMONS_SUCCESS:
-            return  {...state, array: action.payload} 
+            return {...state, ...action.payload} 
         case NEXT_POKEMONS_SUCCESS:
-            return {...state, array: action.payload.array, offset: action.payload.offset}
+            return {...state, ...action.payload}
         default:
             return state;
     }
@@ -26,35 +28,29 @@ export default function pokeReducer(state = dataInitial, action) {
 //acciones                   //activa el reducer  //obtine la data
 export const getPokemonsAction = () => async(dispatch, getState) => {
 
-    //console.log('getState', getState().pokemons.offset) 
-    const offset = getState().pokemons.offset
-
    try {
-       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`)
+       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=&limit=20`)
        dispatch({
            type: GET_POKEMONS_SUCCESS,
-           payload: res.data.results 
+           payload: res.data
        })   
+       
    } catch (error) {
        console.log(error)
    }
     
 }
 
-export const nextPokemonsAction = (nextNumber) => async(dispatch,getState) => {
+export const nextPokemonsAction = () => async(dispatch,getState) => {
     
     //primera alternativa
-    const offset = getState().pokemons.offset
-    const next = offset + nextNumber 
+    const {next} = getState().pokemons
     
     try {
-        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${next}&limit=20`)
+        const res = await axios.get(next)
         dispatch({
             type: NEXT_POKEMONS_SUCCESS,
-            payload: {
-                array: res.data.results,
-                offset: next
-            }
+            payload: res.data
         })
     } catch (error) {
         console.log(error)
