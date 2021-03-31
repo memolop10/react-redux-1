@@ -1,6 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {getPokemonsAction, nextPokemonsAction, previousPokemonsAction} from '../redux/pokeDucks'
+import Detalle from './Detalle'
 
 const Pokemons = () => {
 
@@ -13,38 +14,51 @@ const Pokemons = () => {
     const previous = useSelector(store => store.pokemons.previous)
 
     return (
-        <div>
-            Lista de los pokes
+        <div className="row">
+            <div className="col-md-6">
+                
+                <h3>Lista de los pokes</h3>
 
-            {
-                pokemons.length === 0 &&  
-                <button onClick={() => dispatch(getPokemonsAction())}>
-                    getPokemons
-                </button>
-            }
-
-            <ul>
                 {
-                    pokemons.map(pokemon => (
-                       <li key={pokemon.name}>
-                           {pokemon.name}
-                       </li> 
-                    ))
+                    pokemons.length === 0 &&  
+                    <button onClick={() => dispatch(getPokemonsAction())} className="btn btn-dark">
+                        getPokemons
+                    </button>
                 }
-            </ul>
 
-            {
-                next ? <button onClick={() => dispatch(nextPokemonsAction())}>
-                 next
-                </button> : null
-            }
+                <ul className="list-group mt-3">
+                    {
+                        pokemons.map(pokemon => (
+                        <li key={pokemon.name} className="list-group-item">
+                            {pokemon.name}
+                            <button className="btn btn-dark btn-sm float-right">
+                                Info
+                            </button>
+                        </li> 
+                        ))
+                    }
+                </ul>
 
-            {
-                previous ? <button onClick={() => dispatch(previousPokemonsAction())}>
-                 previous
-                </button> : null
-            }
-            
+                <div className="d-flex justify-content-between mt-2 mb-3">
+                    {
+                        next ? <button onClick={() => dispatch(nextPokemonsAction())} className="btn btn-dark">
+                        next
+                        </button> : null
+                    }
+
+                    {
+                        previous ? <button onClick={() => dispatch(previousPokemonsAction())} className="btn btn-dark">
+                        previous
+                        </button> : null
+                    }
+                </div>
+                
+
+            </div>
+            <div className="col-md-6">
+                <h3>Detalle Pokemon</h3>
+                <Detalle/>
+            </div>
         </div>
     )
 }
