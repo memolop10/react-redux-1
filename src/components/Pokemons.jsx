@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getPokemonsAction, nextPokemonsAction, previousPokemonsAction} from '../redux/pokeDucks'
+import {getPokemonsAction, nextPokemonsAction, previousPokemonsAction,pokeDetailAction} from '../redux/pokeDucks'
 import Detalle from './Detalle'
 
 const Pokemons = () => {
@@ -31,7 +31,10 @@ const Pokemons = () => {
                         pokemons.map(pokemon => (
                         <li key={pokemon.name} className="list-group-item">
                             {pokemon.name}
-                            <button className="btn btn-dark btn-sm float-right">
+                            <button 
+                              className="btn btn-dark btn-sm float-right"
+                              onClick={() => dispatch(pokeDetailAction(pokemon.url))}
+                              >
                                 Info
                             </button>
                         </li> 

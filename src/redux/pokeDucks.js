@@ -11,6 +11,7 @@ const dataInitial = {
 //types
 const GET_POKEMONS_SUCCESS = 'GET_POKEMONS_SUCCESS'
 const NEXT_POKEMONS_SUCCESS = 'NEXT_POKEMONS_SUCCESS'
+const INFO_POKE_SUCCESS = 'INFO_POKE_SUCCESS'
 
 //Reducer
 export default function pokeReducer(state = dataInitial, action) {
@@ -19,8 +20,29 @@ export default function pokeReducer(state = dataInitial, action) {
             return {...state, ...action.payload} 
         case NEXT_POKEMONS_SUCCESS:
             return {...state, ...action.payload}
+        case INFO_POKE_SUCCESS:
+            return {...state, aPokemon: action.payload}
         default:
             return state;
+    }
+}
+
+
+export const pokeDetailAction = (url = "https://pokeapi.co/api/v2/pokemon/1/") => async(dispatch) => {
+    try {
+        const res = await axios.get(url)
+        console.log(res.data)
+        dispatch({
+            type:INFO_POKE_SUCCESS,
+            payload:{
+                name: res.data.name,
+                weight: res.data.weight,
+                height: res.data.height,
+                picture: res.data.sprites.front_default
+            }
+        })
+    } catch (error) {
+        console.log(error)
     }
 }
 
