@@ -13,18 +13,27 @@ const Pokemons = () => {
     const next = useSelector(store => store.pokemons.next)
     const previous = useSelector(store => store.pokemons.previous)
 
+    React.useEffect(() => {
+        const fetchData = () => {
+            dispatch(getPokemonsAction())
+        }
+
+        fetchData()
+    },[dispatch])
+
+
     return (
         <div className="row">
             <div className="col-md-6">
                 
                 <h3>Lista de los pokes</h3>
 
-                {
+                {/* {
                     pokemons.length === 0 &&  
                     <button onClick={() => dispatch(getPokemonsAction())} className="btn btn-dark">
                         getPokemons
                     </button>
-                }
+                } */}
 
                 <ul className="list-group mt-3">
                     {

@@ -52,6 +52,7 @@ export const getPokemonsAction = () => async(dispatch, getState) => {
 
     if (localStorage.getItem('offset=0')) {
         console.log('datos guardados')
+
         dispatch({
             type: GET_POKEMONS_SUCCESS,
             payload: JSON.parse(localStorage.getItem('offset=0'))
@@ -62,7 +63,7 @@ export const getPokemonsAction = () => async(dispatch, getState) => {
 
    try {
        console.log('datos desde la api')
-       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=&limit=20`)
+       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=&limit=10`)
        dispatch({
            type: GET_POKEMONS_SUCCESS,
            payload: res.data
