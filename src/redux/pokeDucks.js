@@ -47,7 +47,7 @@ export const pokeDetailAction = (url = "https://pokeapi.co/api/v2/pokemon/1/") =
 }
 
 
-//acciones                   //activa el reducer  //obtine la data
+//acciones                        //activa el reducer  //obtiene la data
 export const getPokemonsAction = () => async(dispatch, getState) => {
 
     if (localStorage.getItem('offset=0')) {
