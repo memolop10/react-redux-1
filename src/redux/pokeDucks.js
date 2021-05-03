@@ -31,8 +31,8 @@ export default function pokeReducer(state = dataInitial, action) {
 export const pokeDetailAction = (url = "https://pokeapi.co/api/v2/pokemon/1/") => async(dispatch) => {
     try {
         const res = await axios.get(url)
-        console.log(res.data)
-        dispatch({
+        //console.log(res.data)
+        dispatch({ 
             type:INFO_POKE_SUCCESS,
             payload:{
                 name: res.data.name,
@@ -47,11 +47,11 @@ export const pokeDetailAction = (url = "https://pokeapi.co/api/v2/pokemon/1/") =
 }
 
 
-//acciones                        //activa el reducer  //obtiene la data
+//acciones                        //activa el reducer  //obtiene la data, pero ingresa primero a la store y despues a la data asi getState().pokemons
 export const getPokemonsAction = () => async(dispatch, getState) => {
 
     if (localStorage.getItem('offset=0')) {
-        console.log('datos guardados')
+        //console.log('datos guardados')
 
         dispatch({
             type: GET_POKEMONS_SUCCESS,
@@ -62,7 +62,7 @@ export const getPokemonsAction = () => async(dispatch, getState) => {
     }
 
    try {
-       console.log('datos desde la api')
+       //console.log('datos desde la api')
        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=&limit=10`)
        dispatch({
            type: GET_POKEMONS_SUCCESS,
@@ -83,7 +83,7 @@ export const nextPokemonsAction = () => async(dispatch,getState) => {
      const {next} = getState().pokemons
 
     if (localStorage.getItem(next)) {
-        console.log('datos guardados')
+        //console.log('datos guardados')
         dispatch({
             type: NEXT_POKEMONS_SUCCESS,
             payload: JSON.parse(localStorage.getItem(next))
