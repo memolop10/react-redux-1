@@ -1,6 +1,6 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {actualizarUsuarioAccion} from '../redux/usuarioDucks'
+import {actualizarUsuarioAccion, editarFotoAccion} from '../redux/usuarioDucks'
 
 const Perfil = () => {
 
@@ -23,6 +23,25 @@ const Perfil = () => {
         setActivarFormulario(false)
     }
 
+    const [error, setError] = React.useState(false)
+
+    const seleccionarArchivo = imagen => {
+        console.log(imagen.target.files[0])
+        const imagenCliente = imagen.target.files[0]
+
+        if (imagenCliente === undefined) {
+            console.log('no se selecciono imagen')
+            return
+        }
+
+        if (imagenCliente.type === "image/png" || imagenCliente.type === "image/jpg" ) {
+            dispatch(editarFotoAccion(imagenCliente))
+            setError(false)
+        }else{
+            setError(true)
+        }
+    }
+
     return (
         <div className="mt-5 text-center">
             <div className="card">
@@ -33,6 +52,29 @@ const Perfil = () => {
                     <button className="btn btn-dark" onClick={() => setActivarFormulario(true)}>
                         Editar Nombre
                     </button>
+
+                    {
+                        error && 
+                        <div className="alert alert-warning mt-3">
+                            solo archivos .png o .jpg
+                        </div>
+                    }
+                
+                <div className="custom-file">
+                    <input 
+                        type="file" 
+                        className="custom-file-input"
+                        id="inputGroupFile01"
+                        style={{display:'none'}}
+                        onChange={e => seleccionarArchivo(e)}
+                        disabled={loading}/>
+                    
+                    <label 
+                        className= {loading ? "btn btn-dark mt-2 disabled" : "btn btn-dark mt-2"}
+                        htmlFor="inputGroupFile01">
+                            Actualizar Imagen     
+                    </label>
+                </div>
                 </div>
                 {
                     loading && 
